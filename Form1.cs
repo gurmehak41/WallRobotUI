@@ -68,5 +68,5 @@ namespace Lab3_menu
 			serialPort1.Write(start ,0, 1); //start moving
 			textBox1.Clear();
         }
-    }
+	}
 }
