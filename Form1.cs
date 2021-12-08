@@ -15,9 +15,9 @@ namespace Lab3_menu
 		byte[] message = new byte[17];
 		byte[] start = new byte[1];
 		int offset = 0;
-		int xHome;
-		int yHome;
-		byte[,] trajectory;
+		public int xHome = 91;
+		public int yHome = 64;
+		public byte[,] trajectory;
 
 		public Form1()
 		{
@@ -109,6 +109,8 @@ namespace Lab3_menu
 
 			int numCommands = trajectoryMECH.GetLength(0);
 			bool trajLoaded;
+
+			trajectory = new byte[numCommands, 3];
 
 			try
 			{
