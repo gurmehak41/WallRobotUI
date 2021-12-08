@@ -15,6 +15,10 @@ namespace Lab3_menu
 		byte[] message = new byte[17];
 		byte[] start = new byte[1];
 		int offset = 0;
+		int xHome;
+		int yHome;
+		byte[,] trajectory;
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -68,5 +72,87 @@ namespace Lab3_menu
 			serialPort1.Write(start ,0, 1); //start moving
 			textBox1.Clear();
         }
+
+		private void button6_Click(object sender, EventArgs e)
+		{
+			xHome = Convert.ToInt32(textBoxXHome.Text);
+			yHome = Convert.ToInt32(textBoxYHome.Text);
+		}
+
+		private void button4_Click(object sender, EventArgs e)
+		{
+			int[,] trajectoryMECH = new int[,]
+				{
+					{0,-20,-10},
+					{1,-18,10},
+					{1,-16,6 },
+					{1,-14,10 },
+					{,1-12,-10 },
+					{0,-4,-10 },
+					{1,-8,-10 },
+					{1,-8,10 },
+					{1,-4,10 },
+					{0,-4,0 },
+					{1,-8,0 },
+					{0,8,-10 },
+					{1,4,-10 },
+					{1,4,10 },
+					{1,8,10 },
+					{0,16,-10 },
+					{1,16,10 },
+					{0,12,-10 },
+					{1,12,10 },
+					{0,16,0 },
+					{1,12,0 },
+					{0,0,-20 }
+				};
+
+			int numCommands = trajectoryMECH.GetLength(0);
+			bool trajLoaded;
+
+			try
+			{
+				//Convert from relative to absolute coordinates
+				for (int i = 0; i < numCommands; i++)
+				{
+					trajectory[i, 0] = Convert.ToByte(trajectoryMECH[i, 0]);
+					trajectory[i, 1] = Convert.ToByte(xHome + trajectoryMECH[i, 1]);
+					trajectory[i, 2] = Convert.ToByte(yHome + trajectoryMECH[i, 2]);
+				}
+
+				trajLoaded = loadTrajectory(trajectory);
+
+				if (!trajLoaded)
+					throw new Exception();
+			}
+			catch {
+				MessageBox.Show("Trajectory not loaded. Please enter valid home coordinates");
+			}
+		}
+
+		public bool loadTrajectory(byte[,] traj)
+		{
+			if (traj.GetLength(1) != 3)
+				return false;
+
+			int numCommands = traj.GetLength(0);
+
+			for (int i = 0; i < numCommands; i++)
+			{
+				message[0] = traj[i,0];
+				message[1] = traj[i,1];
+				message[2] = traj[i,2];
+
+				if (serialPort1.IsOpen)
+					serialPort1.Write(message, 0, 3);
+				else
+					return false;
+
+				textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+					+ ',' + message[2].ToString() + "\r\n");
+			}
+			
+			return true;
+		}
 	}
 }

@@ -46,8 +46,8 @@
 			this.label5 = new System.Windows.Forms.Label();
 			this.button3 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox6 = new System.Windows.Forms.TextBox();
+			this.textBoxXHome = new System.Windows.Forms.TextBox();
+			this.textBoxYHome = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.button6 = new System.Windows.Forms.Button();
@@ -226,24 +226,25 @@
 			this.button4.TabIndex = 33;
 			this.button4.Text = "*MECH*";
 			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.button4_Click);
 			// 
-			// textBox2
+			// textBoxXHome
 			// 
-			this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox2.Location = new System.Drawing.Point(270, 382);
-			this.textBox2.Margin = new System.Windows.Forms.Padding(4);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(74, 30);
-			this.textBox2.TabIndex = 34;
+			this.textBoxXHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxXHome.Location = new System.Drawing.Point(270, 382);
+			this.textBoxXHome.Margin = new System.Windows.Forms.Padding(4);
+			this.textBoxXHome.Name = "textBoxXHome";
+			this.textBoxXHome.Size = new System.Drawing.Size(74, 30);
+			this.textBoxXHome.TabIndex = 34;
 			// 
-			// textBox6
+			// textBoxYHome
 			// 
-			this.textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBox6.Location = new System.Drawing.Point(393, 382);
-			this.textBox6.Margin = new System.Windows.Forms.Padding(4);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(74, 30);
-			this.textBox6.TabIndex = 35;
+			this.textBoxYHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxYHome.Location = new System.Drawing.Point(393, 382);
+			this.textBoxYHome.Margin = new System.Windows.Forms.Padding(4);
+			this.textBoxYHome.Name = "textBoxYHome";
+			this.textBoxYHome.Size = new System.Drawing.Size(74, 30);
+			this.textBoxYHome.TabIndex = 35;
 			// 
 			// label6
 			// 
@@ -277,6 +278,7 @@
 			this.button6.TabIndex = 38;
 			this.button6.Text = "Set Home";
 			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.button6_Click);
 			// 
 			// Form1
 			// 
@@ -286,8 +288,8 @@
 			this.Controls.Add(this.button6);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.label6);
-			this.Controls.Add(this.textBox6);
-			this.Controls.Add(this.textBox2);
+			this.Controls.Add(this.textBoxYHome);
+			this.Controls.Add(this.textBoxXHome);
 			this.Controls.Add(this.button4);
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.label5);
@@ -332,8 +334,8 @@
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox6;
+		private System.Windows.Forms.TextBox textBoxXHome;
+		private System.Windows.Forms.TextBox textBoxYHome;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Button button6;
