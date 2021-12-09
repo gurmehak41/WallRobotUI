@@ -12,11 +12,10 @@ namespace Lab3_menu
 {
 	public partial class Form1 : Form
 	{
-		byte[] message = new byte[17];
+		byte[] message = new byte[10];
 		byte[] start = new byte[1];
-		int offset = 0;
-		public int xHome = 91;
-		public int yHome = 64;
+		public int xh = 91;
+		public int yh = 64;
 		public byte[,] trajectory;
 
 		public Form1()
@@ -75,8 +74,20 @@ namespace Lab3_menu
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-			xHome = Convert.ToInt32(textBoxXHome.Text);
-			yHome = Convert.ToInt32(textBoxYHome.Text);
+			xh = Convert.ToInt32(textBoxXHome.Text);
+			yh = Convert.ToInt32(textBoxYHome.Text);
+
+			message[0] = Convert.ToByte(2); //2 to flag that these are robot settings not G-code
+			message[1] = Convert.ToByte(textBoxXHome.Text); //robot pos
+			message[2] = Convert.ToByte(textBoxYHome.Text);
+			message[3] = Convert.ToByte(textBox6.Text); //mount 1 pos
+			message[4] = Convert.ToByte(textBox2.Text);
+			message[5] = Convert.ToByte(textBox8.Text); //mount 2 pos
+			message[6] = Convert.ToByte(textBox7.Text);
+			message[7] = 200; //start value
+
+			serialPort1.Write(message, 0, 8);
+
 		}
 
 		private void button4_Click(object sender, EventArgs e)
@@ -118,8 +129,8 @@ namespace Lab3_menu
 				for (int i = 0; i < numCommands; i++)
 				{
 					trajectory[i, 0] = Convert.ToByte(trajectoryMECH[i, 0]);
-					trajectory[i, 1] = Convert.ToByte(xHome + trajectoryMECH[i, 1]);
-					trajectory[i, 2] = Convert.ToByte(yHome + trajectoryMECH[i, 2]);
+					trajectory[i, 1] = Convert.ToByte(xh + trajectoryMECH[i, 1]);
+					trajectory[i, 2] = Convert.ToByte(yh + trajectoryMECH[i, 2]);
 				}
 
 				trajLoaded = loadTrajectory(trajectory);
@@ -156,5 +167,161 @@ namespace Lab3_menu
 			
 			return true;
 		}
-	}
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+			//54 COMMANDS need to expand circular buffer
+
+
+			///////////////go to start of drawing///////////////
+			message[0] = Convert.ToByte(0);
+			message[1] = Convert.ToByte(xh);
+			message[2] = Convert.ToByte(yh - 25);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			///////////////draw top of house///////////////
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh - 10);
+			message[2] = Convert.ToByte(yh - 30);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh + 10);
+			message[2] = Convert.ToByte(yh - 30);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh);
+			message[2] = Convert.ToByte(yh - 25);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+
+			///////////////draw body of house///////////////
+			message[0] = Convert.ToByte(0);
+			message[1] = Convert.ToByte(xh + 10);
+			message[2] = Convert.ToByte(yh - 30);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh + 10);
+			message[2] = Convert.ToByte(yh - 50);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh - 10);
+			message[2] = Convert.ToByte(yh - 50);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh - 10);
+			message[2] = Convert.ToByte(yh - 30);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			///////////////draw window of house///////////////
+			message[0] = Convert.ToByte(0);
+			message[1] = Convert.ToByte(xh - 5);
+			message[2] = Convert.ToByte(yh - 32);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh + 5);
+			message[2] = Convert.ToByte(yh - 32);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh + 5);
+			message[2] = Convert.ToByte(yh - 35);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh - 5);
+			message[2] = Convert.ToByte(yh - 35);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh - 5);
+			message[2] = Convert.ToByte(yh - 32);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			///////////////draw door of house///////////////
+			message[0] = Convert.ToByte(0);
+			message[1] = Convert.ToByte(xh - 3);
+			message[2] = Convert.ToByte(yh - 50);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh - 3);
+			message[2] = Convert.ToByte(yh - 40);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh + 3);
+			message[2] = Convert.ToByte(yh - 40);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+			message[0] = Convert.ToByte(1);
+			message[1] = Convert.ToByte(xh + 3);
+			message[2] = Convert.ToByte(yh - 50);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+
+			///////////////go away from drawing///////////////
+			message[0] = Convert.ToByte(0);
+			message[1] = Convert.ToByte(xh);
+			message[2] = Convert.ToByte(yh);
+			serialPort1.Write(message, 0, 3);
+			textBox1.AppendText(message[0].ToString() + ',' + message[1].ToString()
+				+ ',' + message[2].ToString() + "\r\n");
+
+		}
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+			message[0] = Convert.ToByte(0);
+			message[1] = Convert.ToByte(xh);
+			message[2] = Convert.ToByte(yh);
+			message[3] = Convert.ToByte(200); //start value
+
+			serialPort1.Write(message, 0, 4);
+        }
+    }
 }
